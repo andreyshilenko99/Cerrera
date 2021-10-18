@@ -1,0 +1,65 @@
+version: "3.8"
+services:
+  web:
+    build: .
+    entrypoint: ./runserv.sh
+    command: python manage.py runserver 0.0.0.0:8000
+#    command:
+#      - ./runserv.sh
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+  db:
+    container_name: db
+    image: postgres:13-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
+      - POSTGRES_PASSWORD=postgres
+      - DB_HOST=db
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data/
+    ports:
+      - 5432:5432
+  rabbit:
+    container_name: rabbitmq
+    hostname: rabbit
+    image: rabbitmq:latest
+    ports:
+      - "5672:5672"
+    restart: on-failure
+    environment:
+      - RABBITMQ_DEFAULT_USER=rabit
+      - RABBITMQ_DEFAULT_PASS=rabit
+  celery:
+    build:
+      context: .
+    command: celery -A Cerrera worker -l info
+    container_name: app_celery
+    volumes:
+      - .:/Cerrera
+    links:
+      - rabbit
+    depends_on:
+      - db
+      - rabbit
+      - web
+
+  celery-beat:
+    build: .
+    command: celery -A Cerrera beat -l info
+    container_name: app_celeryb
+    volumes:
+      - .:/Cerrera
+    links:
+      - rabbit
+    depends_on:
+      - db
+      - rabbit
+      - web
+
+
+

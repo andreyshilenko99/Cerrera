@@ -1,0 +1,2 @@
+ENTRYPOINT [ "/Cerrera/sh" ]
+CMD [ "./docker.celery.sh" ]
