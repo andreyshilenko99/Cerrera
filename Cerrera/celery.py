@@ -10,7 +10,12 @@ from celery import Celery
 from celery.schedules import crontab
 from celery import shared_task
 from Cerrera.trace import trace
-from Cerrera.check_uniping import main_check
+
+from Cerrera.check_uniping import main_check   # snmp version
+# TODO task
+from Cerrera.uniping_check import main_check   # url version
+
+
 from Cerrera.skyPoint import skypoint
 from Cerrera.check_strig import check_strig
 from kombu import Exchange, Queue

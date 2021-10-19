@@ -2,6 +2,7 @@ import requests
 import re
 
 lines_control_map = {
+    'обогрев': 1,
     'вентилятор_команда': 2,
     'БП ПЭВМ': 4,
     'БП Шелест': 6,
@@ -39,7 +40,7 @@ def obtain_state(url, line_name):
     stroka_list = re.findall('[0-9]+', stroka)
     if 'ok' in stroka and len(stroka_list) == 3:
         result_state = stroka_list[1]
-    state = "вкл" if int(result_state) == 1 else "выкл"
+    state = "включен" if int(result_state) == 1 else "выключен"
 
     return state
 
@@ -57,13 +58,11 @@ def send_line_command(url, line_name, arg):
     print("{}".format(result_get))
 
 
-def return_conditions(url):
-    low_t = 20
-    high_t = 60
-    low_h = 10
-    high_h = 70
+def main_check(url):
     temperature = ''
+    temperature_state = ''
     humidity = ''
+    wetness_state = ''
     try:
         temp = requests.get(url + 'thermo.cgi?t1', auth=auth, timeout=0.05)
         temp_str = temp.content.decode("utf-8")
@@ -74,18 +73,18 @@ def return_conditions(url):
             send_line_command(url, 'вентилятор_команда', arg=1)
             # все круто
             if temperature_condition == '2':
-                print('temp is OK')
+                temperature_state = 'temp_is_ok'
                 send_line_command(url, 'обогрев', arg=0)
             #     жарко
             elif temperature_condition == '3':
-                print('temp is too high')
+                temperature_state = 'tempe_not_ok'
                 send_line_command(url, 'обогрев', arg=0)
             #     холодно
             elif temperature_condition == '1':
-                print('temp is too low')
+                temperature_state = 'tempe_not_ok'
                 send_line_command(url, 'обогрев', arg=1)
             else:
-                print('ошибка uniping')
+                temperature_state = 'ошибка uniping'
     except:
         temperature = 'ошибка uniping'
     try:
@@ -96,19 +95,35 @@ def return_conditions(url):
             humidity = hum_list[0]
             humidity_condition = hum_list[2]
             if humidity_condition == '2':
-                send_line_command(url, 'обогрев', arg=0)
-                print('humidity is OK')
+                wetness_state = 'wetness_is_ok'
             elif humidity_condition == '3':
+                wetness_state = 'wetness_not_ok'
                 send_line_command(url, 'обогрев', arg=1)
-                print('humidity is too high')
             elif humidity_condition == '1':
-                print('humidity is too low')
+                wetness_state = 'wetness_not_ok'
             else:
-                print('ошибка uniping')
+                wetness_state = 'ошибка uniping'
     except:
         humidity = 'ошибка uniping'
 
-    return temperature, humidity
+    try:
+        cooler = obtain_state(url, 'вентилятор')
+    except:
+        cooler = 'error'
+    try:
+        heater_state = obtain_state(url, 'обогрев')
+    except:
+        heater_state = 'error'
+    print(*(temperature, humidity, temperature_state, wetness_state, cooler, heater_state))
+    dict_state = {'cooler': cooler,
+                  'wetness_state': wetness_state,
+                  'temperature_state': temperature_state,
+                  'temperature': str(temperature),
+                  'wetness': str(humidity),
+                  'heater_state': heater_state
+                  }
+
+    return dict_state
 
 
 # # получение состояния всех блоков в комплексе
@@ -135,5 +150,4 @@ def return_conditions(url):
 
 if __name__ == "__main__":
     url = 'http://192.168.2.51/'
-    x = return_conditions(url)
-    print(x)
+    x = main_check(url)

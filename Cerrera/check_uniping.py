@@ -96,6 +96,10 @@ def main_check(host):
         #                             control_oids.get('check_heater'))) == 1:
         #                 dict_state['wetness_state'] = 'wetness_is_ok'
         #                 snmp_send(community_string, ip_address_host, port_snmp, control_oids.get('warm'))
+
+
+
+
         return dict_state
     except TypeError:
         return dict_state
