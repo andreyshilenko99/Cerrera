@@ -19,11 +19,12 @@ def trace():
                     Point = apps.get_model('geo', 'Point')
                     port = 10100  # The same port as used by the server
                     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                    s.settimeout(1)
+                    s.settimeout(2)
                     print(f'connect to {i}, port {port}')
                     s.connect((i, port))
                     data = s.recv(1024)
                     s.close()
+                    print(data)
                     signal = found_signal_params_pb2.FoundSignalParams()
                     signal.ParseFromString(data[14::])
                     signal_dict = json_format.MessageToDict(signal)
@@ -48,4 +49,5 @@ def trace():
                                       strig_name=strizh)
                         point.save()
     except (ConnectionRefusedError, OSError, socket.timeout) as e:
+        print(e)
         print("Connection refused")

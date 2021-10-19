@@ -48,7 +48,7 @@ app.conf.beat_schedule = {
     },
     'check_state': {
         'task': 'check',
-        'schedule': timedelta(seconds=1),
+        'schedule': timedelta(seconds=3),
     },
     'aeroScope': {
         'task': 'aeroScope',
