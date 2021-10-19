@@ -24,7 +24,11 @@ app.autodiscover_tasks()
 # CELERYD_CONCURRENCY = 1
 # CELERYD_PREFETCH_MULTIPLIER = 1
 # CELERY_TACKS_LATE = False
-app.control.purge()
+
+
+# TODO ???
+# app.control.purge()
+
 app.conf.task_queues = (
     # Queue("default", Exchange("default"), routing_key="default"),
     Queue("for_check", Exchange("for_check"), routing_key="task_a"),

@@ -15,6 +15,8 @@ from datetime import timedelta
 from pathlib import Path
 import os
 import json
+import django
+
 
 with open("config.json", encoding='utf-8-sig') as json_cfg:
     data_conf = json.load(json_cfg)
@@ -92,32 +94,43 @@ TEMPLATES = [
 WSGI_APPLICATION = 'Cerrera.wsgi.application'
 
 CELERY_BROKER_URL = 'amqp://localhost'
-CELERY_RESULT_BACKEND = "redis://127.0.0.1:6379/0"
 # CELERY_BROKER_URL = 'amqp://rabit:rabit@rabbit:5672'
+CELERY_RESULT_BACKEND = "redis://127.0.0.1:6379/0"
 # CELERY_RESULT_BACKEND = 'django-db'
 CELERY_TIMEZONE = 'Europe/Moscow'
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'stuff',
-        'USER': 'dron',
-        'PASSWORD': '555',
-        'HOST': 'localhost',
-        'PORT': '5432', }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.contrib.gis.db.backends.postgis',
+#         # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'stuff',
+#         'USER': 'dron',
+#         'PASSWORD': '555',
+#         'HOST': 'localhost',
+#         'PORT': '5432', }
+# }
 
 # DATABASES = {
 #     'default': {
-#         # 'ENGINE': 'django.contrib.gis.db.backends.postgis',
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': db_config.get('NAME'),
-#         'USER': db_config.get('USER'),
-#         'PASSWORD': db_config.get('PASSWORD'),
-#         'HOST': db_config.get('HOST'),
-#         'PORT': db_config.get('PORT')}
+#         'ENGINE': 'django.contrib.gis.db.backends.postgis',
+#         # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'postgres',
+#         'USER': 'postgres',
+#         'PASSWORD': '555',
+#         'HOST': 'localhost',
+#         'PORT': '5432', }
 # }
+
+DATABASES = {
+    'default': {
+        # 'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': db_config.get('NAME'),
+        'USER': db_config.get('USER'),
+        'PASSWORD': db_config.get('PASSWORD'),
+        'HOST': db_config.get('HOST'),
+        'PORT': db_config.get('PORT')}
+}
 
 # AUTH_PASSWORD_VALIDATORS = [
 #     {

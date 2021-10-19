@@ -4,8 +4,7 @@
 **/.idea/tasks.xml
 postgres_data/
 
-*.png
-
+Tiles
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
