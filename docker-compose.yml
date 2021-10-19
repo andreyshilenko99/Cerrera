@@ -34,11 +34,38 @@ services:
     environment:
       - RABBITMQ_DEFAULT_USER=rabit
       - RABBITMQ_DEFAULT_PASS=rabit
-  celery:
+  celeryTrace:
     build:
       context: .
-    command: celery -A Cerrera worker -l info
-    container_name: app_celery
+    command: celery -A Cerrera worker -l info -Q for_info
+    container_name: app_celery_trace
+    volumes:
+      - .:/Cerrera
+    links:
+      - rabbit
+    depends_on:
+      - db
+      - rabbit
+      - web
+  celeryCheck:
+    build:
+      context: .
+    command: celery -A Cerrera worker -l info -Q for_check
+    container_name: app_celery_check
+    volumes:
+      - .:/Cerrera
+    links:
+      - rabbit
+    depends_on:
+      - db
+      - rabbit
+      - web
+
+  celeryAeroScope:
+    build:
+      context: .
+    command: celery -A Cerrera worker -l info -Q for_aero
+    container_name: app_celery_aero
     volumes:
       - .:/Cerrera
     links:
