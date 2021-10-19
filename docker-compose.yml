@@ -34,7 +34,7 @@ services:
     environment:
       - RABBITMQ_DEFAULT_USER=rabit
       - RABBITMQ_DEFAULT_PASS=rabit
-  celeryTrace:
+  celery_trace:
     build:
       context: .
     command: celery -A Cerrera worker -l info -Q for_info
@@ -47,7 +47,7 @@ services:
       - db
       - rabbit
       - web
-  celeryCheck:
+  celery_check:
     build:
       context: .
     command: celery -A Cerrera worker -l info -Q for_check
@@ -61,7 +61,7 @@ services:
       - rabbit
       - web
 
-  celeryAeroScope:
+  celery_aerocope:
     build:
       context: .
     command: celery -A Cerrera worker -l info -Q for_aero

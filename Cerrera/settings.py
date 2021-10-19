@@ -92,13 +92,15 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'Cerrera.wsgi.application'
-
-CELERY_BROKER_URL = 'amqp://localhost'
-# CELERY_BROKER_URL = 'amqp://rabit:rabit@rabbit:5672'
-CELERY_RESULT_BACKEND = "redis://127.0.0.1:6379/0"
+# Local settings
+# CELERY_BROKER_URL = 'amqp://localhost'
+# CELERY_RESULT_BACKEND = "redis://127.0.0.1:6379/0"
 # CELERY_RESULT_BACKEND = 'django-db'
+# Docker settings
+CELERY_BROKER_URL = 'amqp://rabit:rabit@rabbit:5672'
 CELERY_TIMEZONE = 'Europe/Moscow'
 
+# Local settings
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.contrib.gis.db.backends.postgis',
@@ -120,7 +122,7 @@ CELERY_TIMEZONE = 'Europe/Moscow'
 #         'HOST': 'localhost',
 #         'PORT': '5432', }
 # }
-
+# Docker settings
 DATABASES = {
     'default': {
         # 'ENGINE': 'django.contrib.gis.db.backends.postgis',

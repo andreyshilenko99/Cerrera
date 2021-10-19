@@ -13,7 +13,7 @@ WORKDIR /Cerrera
 
 
 #copy the app code to image working directory
-COPY ./Cerrera /Cerrera
+COPY . /Cerrera
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
   # psycopg2 dependencies
@@ -31,7 +31,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 
 
 #let pip install required packages
-RUN pip install -r requirements.txt
+RUN pip install -r Cerrera/requirements.txt
 
 COPY Cerrera/runserv.sh ./runserv.sh
 RUN chmod +x ./runserv.sh
