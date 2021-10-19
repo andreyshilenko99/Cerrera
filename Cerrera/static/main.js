@@ -121,6 +121,15 @@ function map_init_basic() {
             console.log('_______')
         }
     });
+    var sound_short = new Howl({
+        src: ['static/sound_short.mp3'],
+        volume: 0.1,
+        onend: function () {
+            console.log('_______')
+            console.log('PLAYED sound_short')
+            console.log('_______')
+        }
+    });
 
     var data_drawn = new Set();
     var ids_drawn = new Set();
@@ -484,7 +493,7 @@ function map_init_basic() {
                     if (!pks_tracked[pk] || isEmpty(pks_tracked[pks_tracked])) {
                         pks_tracked[pk] = 0;
                         if (initial_draw_track !== 0) {
-                            sound.play()
+                            sound_short.play()
                         }
                     }
                 } else if (pks_tracked[pk] === DRONE_COUNTER) {
