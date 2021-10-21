@@ -290,6 +290,7 @@ function map_init_basic() {
                 let height = heights_arr[j];
                 let coords = coords_arr[j];
                 let last_idx = coords_arr.length - 1
+                // print height and id number on map
                 // if (j !== 0 && j !== last_idx) {
                 // place_text(map, coords, height)
                 // map = place_number_detection(map, coords, (last_idx - j).toString(), height)
