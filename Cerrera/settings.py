@@ -59,6 +59,8 @@ INSTALLED_APPS = [
     'djgeojson',
     'pysnmp',
     'geo',
+    'info',
+    'control',
 
 ]
 
@@ -93,24 +95,28 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Cerrera.wsgi.application'
 # Local settings
-# CELERY_BROKER_URL = 'amqp://localhost'
-# CELERY_RESULT_BACKEND = "redis://127.0.0.1:6379/0"
+# CELERY_ALWAYS_EAGER = True
+# CELERY_IMPORTS = ('info.tasks',)
+CELERY_BROKER_URL = 'amqp://localhost'
+# CELERY_BROKER_URL = "redis://127.0.0.1:6379/0"
 # CELERY_RESULT_BACKEND = 'django-db'
 # Docker settings
-CELERY_BROKER_URL = 'amqp://rabit:rabit@rabbit:5672'
+# CELERY_BROKER_URL = 'amqp://rabit:rabit@rabbit:5672'
 CELERY_TIMEZONE = 'Europe/Moscow'
+CELERY_TASK_TRACK_STARTED = True
+
 
 # Local settings
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-#         # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'stuff',
-#         'USER': 'dron',
-#         'PASSWORD': '555',
-#         'HOST': 'localhost',
-#         'PORT': '5432', }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'stuff',
+        'USER': 'dron',
+        'PASSWORD': '555',
+        'HOST': 'localhost',
+        'PORT': '5432', }
+}
 
 # DATABASES = {
 #     'default': {
@@ -123,16 +129,16 @@ CELERY_TIMEZONE = 'Europe/Moscow'
 #         'PORT': '5432', }
 # }
 # Docker settings
-DATABASES = {
-    'default': {
-        # 'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': db_config.get('NAME'),
-        'USER': db_config.get('USER'),
-        'PASSWORD': db_config.get('PASSWORD'),
-        'HOST': db_config.get('HOST'),
-        'PORT': db_config.get('PORT')}
-}
+# DATABASES = {
+#     'default': {
+#         # 'ENGINE': 'django.contrib.gis.db.backends.postgis',
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': db_config.get('NAME'),
+#         'USER': db_config.get('USER'),
+#         'PASSWORD': db_config.get('PASSWORD'),
+#         'HOST': db_config.get('HOST'),
+#         'PORT': db_config.get('PORT')}
+# }
 
 # AUTH_PASSWORD_VALIDATORS = [
 #     {

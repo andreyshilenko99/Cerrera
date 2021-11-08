@@ -20,8 +20,8 @@ from .forms import StrizhForm, StrizhFilterForm, DroneFilterForm, ApemsConfigura
     TableFilterForm, TableOrderForm, SkyPointFilterForm, MapChoosingForm
 from .forms import TimePickForm
 
-from Cerrera.control_trace import scan_on_off, check_state, jammer_on_off
-from Cerrera.shelest_jam import set_gain
+from control.control_trace import scan_on_off, check_state, jammer_on_off
+from control.shelest_jam import set_gain
 
 DEGREE_SIGN = u"\u2103"
 chosen_strizh = 0
