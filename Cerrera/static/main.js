@@ -113,11 +113,20 @@ function map_init_basic() {
 // set view to chosen strizh
 
     var sound = new Howl({
-        src: ['static/sound2.mp3'],
+        src: ['static/sound2_3sec.mp3'],
         volume: 0.1,
         onend: function () {
             console.log('_______')
             console.log('PLAYED sound')
+            console.log('_______')
+        }
+    });
+    var sound_short = new Howl({
+        src: ['static/sound_short.mp3'],
+        volume: 0.1,
+        onend: function () {
+            console.log('_______')
+            console.log('PLAYED sound_short')
             console.log('_______')
         }
     });
@@ -463,7 +472,7 @@ function map_init_basic() {
         }
 
         // drawing trajectories from skypoint
-        $.getJSON('/geo/journal_view_aero_main/', function (data) {
+        $.getJSON('/geo/journal_view_aero/', function (data) {
             var tracks_number = 0;
             let data_len = data.features.length;
             if (data_len > MAXDRONES) {
@@ -484,7 +493,7 @@ function map_init_basic() {
                     if (!pks_tracked[pk] || isEmpty(pks_tracked[pks_tracked])) {
                         pks_tracked[pk] = 0;
                         if (initial_draw_track !== 0) {
-                            sound.play()
+                            sound_short.play()
                         }
                     }
                 } else if (pks_tracked[pk] === DRONE_COUNTER) {
@@ -551,11 +560,11 @@ function map_init_basic() {
                     let height = heights_arr[j];
                     let coords = coords_arr[j];
                     let last_idx = coords_arr.length - 1
-                    if (j !== 0 && j !== coords_arr.length - 1) {
-                        layers_track[key] = place_text(layers_track[key], coords, height)
-                        layers_track[key] = place_number_detection(layers_track[key], coords, (last_idx - j).toString(), height)
-                    }
-                    // map.addLayer(strizh_layers[strizh_name])
+                    // if (j !== 0 && j !== coords_arr.length - 1) {
+                    // layers_track[key] = place_text(layers_track[key], coords, height)
+                    // layers_track[key] = place_number_detection(layers_track[key], coords, (last_idx - j).toString(), height)
+                    // }
+
                 }
                 DronesTraj[key].counter += 1;
             }
